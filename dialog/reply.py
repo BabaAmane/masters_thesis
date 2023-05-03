@@ -8,7 +8,8 @@ import argparse
 def generate_reply(tokenizer,inp,model, device, num_gen=1):
     input_text = "<s>" + str(inp) + "[SEP]"
     input_ids = tokenizer.encode(input_text, return_tensors='pt').to(device)
-    out = model.generate(input_ids, do_sample=True, max_length=128, num_return_sequences=num_gen, top_p=0.95, top_k=50, bad_words_ids=[[1], [5]], no_repeat_ngram_size=3)
+    # 変数の修正が必要
+    out = model.generate(input_ids, do_sample=True, max_length=128, num_return_sequences=1, top_p=0.95, top_k=50, bad_words_ids=[[1], [5]], no_repeat_ngram_size=3)
 
     print(">", "あなた")
     print(inp)
