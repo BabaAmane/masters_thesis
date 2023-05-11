@@ -25,6 +25,9 @@ def main():
     worry_text_list = df_worry_text_data['message'].to_list()
     famous_quote_list = df_famous_quote_data['famous_quote'].to_list()
 
+    print('worry text length', len(worry_text_list))
+    print('famous text length', len(famous_quote_list))
+    
     model = SentenceTransformer('all-MiniLM-L6-v2')
     
     # worry_text_list = worry_text_list[:2]
