@@ -39,41 +39,61 @@ def main():
     print('famous text length', len(famous_quote_list))
 
     model = SentenceTransformer('all-MiniLM-L6-v2')
-
-    # データを分割
-    worry_text_list1 = worry_text_list[:120000]
    
     # worry_text_listとfamous_quote_listの文章をエンコードする
-    start_time = time.time()
-    encoded_worry_text_list1 = encode_sentences(model, worry_text_list1)
-    end_time = time.time()
-    # 計算にかかった時間を出力
-    elapsed_time = end_time - start_time
-    print("encode worry text Elapsed time:", elapsed_time, "seconds")
-    
-    start_time = time.time()
     encoded_famous_quote_list = encode_sentences(model,famous_quote_list)
-
-    end_time = time.time()
-    # 計算にかかった時間を出力
-    elapsed_time = end_time - start_time
-    print("encode famous quote Elapsed time:", elapsed_time, "seconds")
-    print('encode終了')
-
+    
+    # データを分割
     # 計算1個目
+    worry_text_list1 = worry_text_list[:40000]
+    encoded_worry_text_list1 = encode_sentences(model, worry_text_list1)
     most_similar_sentences1 = calculate_most_similar_sentences(encoded_worry_text_list1, encoded_famous_quote_list, famous_quote_list)
-
     gc.collect()
     del worry_text_list1
     gc.collect()
 
-    worry_text_list2 = worry_text_list[120000:]
+    # 計算2個目
+    worry_text_list2 = worry_text_list[40000:80000]
     encoded_worry_text_list2 = encode_sentences(model, worry_text_list2)
-
-    # 計算1個目
     most_similar_sentences2 = calculate_most_similar_sentences(encoded_worry_text_list2, encoded_famous_quote_list, famous_quote_list)
+    gc.collect()
+    del worry_text_list2
+    gc.collect()
 
-    most_similar_sentences = most_similar_sentences1 + most_similar_sentences2
+    # 計算3個目
+    worry_text_list3 = worry_text_list[80000:120000]
+    encoded_worry_text_list3 = encode_sentences(model, worry_text_list3)
+    most_similar_sentences3 = calculate_most_similar_sentences(encoded_worry_text_list3, encoded_famous_quote_list, famous_quote_list)
+    gc.collect()
+    del worry_text_list3
+    gc.collect()
+
+    # 計算4個目
+    worry_text_list4 = worry_text_list[120000:160000]
+    encoded_worry_text_list4 = encode_sentences(model, worry_text_list4)
+    most_similar_sentences4 = calculate_most_similar_sentences(encoded_worry_text_list4, encoded_famous_quote_list, famous_quote_list)
+    gc.collect()
+    del worry_text_list4
+    gc.collect()
+
+    # 計算5個目
+    worry_text_list5 = worry_text_list[160000:200000]
+    encoded_worry_text_list5 = encode_sentences(model, worry_text_list5)
+    most_similar_sentences5 = calculate_most_similar_sentences(encoded_worry_text_list5, encoded_famous_quote_list, famous_quote_list)
+    gc.collect()
+    del worry_text_list5
+    gc.collect()
+
+    # 計算6個目
+    worry_text_list6 = worry_text_list[200000:]
+    encoded_worry_text_list6 = encode_sentences(model, worry_text_list6)
+    most_similar_sentences6 = calculate_most_similar_sentences(encoded_worry_text_list6, encoded_famous_quote_list, famous_quote_list)
+    gc.collect()
+    del worry_text_list6
+    gc.collect()
+
+   
+    most_similar_sentences = most_similar_sentences1 + most_similar_sentences2 + most_similar_sentences3 + most_similar_sentences4 + most_similar_sentences5 + most_similar_sentences6
 
     
     # データフレーム化
