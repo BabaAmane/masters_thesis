@@ -52,6 +52,8 @@ def main():
     del worry_text_list1
     gc.collect()
 
+    print('1終了')
+
     # 計算2個目
     worry_text_list2 = worry_text_list[40000:80000]
     encoded_worry_text_list2 = encode_sentences(model, worry_text_list2)
@@ -59,6 +61,8 @@ def main():
     gc.collect()
     del worry_text_list2
     gc.collect()
+
+    print('2終了')
 
     # 計算3個目
     worry_text_list3 = worry_text_list[80000:120000]
@@ -68,6 +72,8 @@ def main():
     del worry_text_list3
     gc.collect()
 
+    print('3終了')
+
     # 計算4個目
     worry_text_list4 = worry_text_list[120000:160000]
     encoded_worry_text_list4 = encode_sentences(model, worry_text_list4)
@@ -75,6 +81,8 @@ def main():
     gc.collect()
     del worry_text_list4
     gc.collect()
+
+    print('4終了')
 
     # 計算5個目
     worry_text_list5 = worry_text_list[160000:200000]
@@ -84,6 +92,8 @@ def main():
     del worry_text_list5
     gc.collect()
 
+    print('5終了')
+
     # 計算6個目
     worry_text_list6 = worry_text_list[200000:]
     encoded_worry_text_list6 = encode_sentences(model, worry_text_list6)
@@ -92,10 +102,11 @@ def main():
     del worry_text_list6
     gc.collect()
 
+    print('6終了')
+
    
     most_similar_sentences = most_similar_sentences1 + most_similar_sentences2 + most_similar_sentences3 + most_similar_sentences4 + most_similar_sentences5 + most_similar_sentences6
 
-    
     # データフレーム化
     df_link = pd.DataFrame(list(zip(worry_text_list, most_similar_sentences)), columns = ['worry_text', 'famous_quote'])
     df_link.to_csv('result/linked_negative_text_famous_quote.csv', index=False)
