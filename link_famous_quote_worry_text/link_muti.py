@@ -127,11 +127,14 @@ def main(args):
 
     # データフレーム化
     df_link = pd.DataFrame(list(zip(worry_text_list, most_similar_sentences)), columns = ['worry_text', 'famous_quote'])
-    df_link.to_csv('result/linked_negative_text_famous_quote.csv', index=False)
+    result_dir = args.result_dir
+    df_link.to_csv(result_dir, index=False)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--worry_text_data_dir', type=str, default='../worry_text_data/analysis/process_score_result/negative_transformer_more9.csv',
+                        help='悩みの文章')
+    parser.add_argument('--result_dir', type=str, default='result/linked_negative_text_famous_quote.csv',
                         help='悩みの文章')
 
     args = parser.parse_args()
