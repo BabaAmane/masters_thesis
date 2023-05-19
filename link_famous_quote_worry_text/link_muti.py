@@ -52,12 +52,15 @@ def main(args):
     del worry_text_list1
     gc.collect()
 
+    print('1')
+
     worry_text_list2 = worry_text_list[100000:]
     encoded_worry_text_list2 = encode_sentences(model, worry_text_list2)
     most_similar_sentences2 = calculate_most_similar_sentences(encoded_worry_text_list2, encoded_famous_quote_list, famous_quote_list)
     gc.collect()
     del worry_text_list2
     gc.collect()
+    print(2)
 
     most_similar_sentences = most_similar_sentences1 + most_similar_sentences2
 
