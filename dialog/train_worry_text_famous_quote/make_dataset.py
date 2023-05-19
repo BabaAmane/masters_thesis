@@ -1,6 +1,7 @@
 import pandas as pd
 from transformers import AutoModelForCausalLM, T5Tokenizer
 import argparse
+from tqdm import tqdm
 
 def main(args):
     #エクセルファイルの読み込み
@@ -27,11 +28,11 @@ def main(args):
     output_file = open(output_file_dir, 'w', encoding='utf-8')
 
 
-    for i in range(len(input_text_list)):
+    for i in tqdm(range(len(input_text_list))):
         # 修正後のコード
         inp_tokens = tokenizer.tokenize(input_text_list[i])[:256]
         inp = "".join(inp_tokens).replace('▁', '')
-        print(output_text_list[i])
+        # print(output_text_list[i])
         out_tokens = tokenizer.tokenize(output_text_list[i])[:256]
         out = "".join(out_tokens).replace('▁', '')
 
@@ -50,9 +51,9 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--pretrain_model', type=str, default='rinna/japanese-gpt2-small',
                         help='pretrain model name')
-    parser.add_argument('--input_link_file', type=str, default='../../link_famous_quote_worry_text/result/linked_worry_text_famous_quote.csv',
+    parser.add_argument('--input_link_file', type=str, default='../../link_famous_quote_worry_text/result/linked_negative_text_famous_quote.csv',
                         help='名言と励まし文のデータ')
-    parser.add_argument('--output_file', type=str, default='train_data_worry_text_famous_quote/dataset_worry_text_famous_quote.txt',
+    parser.add_argument('--output_file', type=str, default='train_data_worry_text_famous_quote/dataset_negative_text_famous_quote.txt',
                         help='出力のディレクトリ')
     
     args = parser.parse_args()
