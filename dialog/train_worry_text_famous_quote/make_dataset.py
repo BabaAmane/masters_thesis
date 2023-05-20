@@ -30,19 +30,19 @@ def main(args):
 
     for i in tqdm(range(len(input_text_list))):
         # 修正後のコード
-        inp_tokens = tokenizer.tokenize(input_text_list[i])[:256]
-        inp = "".join(inp_tokens).replace('▁', '')
-        # print(output_text_list[i])
-        out_tokens = tokenizer.tokenize(output_text_list[i])[:256]
-        out = "".join(out_tokens).replace('▁', '')
+        # inp_tokens = tokenizer.tokenize(input_text_list[i])[:256]
+        # inp = "".join(inp_tokens).replace('▁', '')
+        # # print(output_text_list[i])
+        # out_tokens = tokenizer.tokenize(output_text_list[i])[:256]
+        # out = "".join(out_tokens).replace('▁', '')
 
-        data = "<s>" + inp + "[SEP]" + out + "</s>"
-        tmp.append(data)
+        # data = "<s>" + inp + "[SEP]" + out + "</s>"
+        # tmp.append(data)
 
         # 修正前のコード
-        # data = "<s>" + str(input_text_list[i]) + "[SEP]" + str(output_text_list[i]) + "</s>" +'\n'
-        # tmp.append(data)
-        # output_file.write(data)
+        data = "<s>" + str(input_text_list[i]) + "[SEP]" + str(output_text_list[i]) + "</s>" +'\n'
+        tmp.append(data)
+        output_file.write(data)
     
     txt = "".join(tmp) 
     output_file.write(txt+ '\n')
@@ -53,7 +53,7 @@ if __name__ == '__main__':
                         help='pretrain model name')
     parser.add_argument('--input_link_file', type=str, default='../../link_famous_quote_worry_text/result/linked_negative_text_famous_quote.csv',
                         help='名言と励まし文のデータ')
-    parser.add_argument('--output_file', type=str, default='train_data_worry_text_famous_quote/dataset_negative_text_famous_quote.txt',
+    parser.add_argument('--output_file', type=str, default='train_data_worry_text_famous_quote/dataset_negative_text_famous_quote2.txt',
                         help='出力のディレクトリ')
     
     args = parser.parse_args()
