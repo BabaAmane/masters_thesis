@@ -44,8 +44,8 @@ def main(args):
         tmp.append(data)
         output_file.write(data)
     
-    txt = "".join(tmp) 
-    output_file.write(txt+ '\n')
+    # txt = "".join(tmp) 
+    # output_file.write(txt+ '\n')
        
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
