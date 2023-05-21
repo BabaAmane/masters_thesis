@@ -89,7 +89,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--pretrain_model', type=str, default='rinna/japanese-gpt2-small',
                         help='pretrain model name')
-    parser.add_argument('--fainching_model', type=str, default='model_20epoch/',
+    parser.add_argument('--fainching_model', type=str, default='model_negative_20epoch/',
                         help='fainching model name')
     parser.add_argument('--input_text', type=str, default='彼女ができません。',
                         help='input text')
