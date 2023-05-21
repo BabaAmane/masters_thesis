@@ -60,7 +60,7 @@ def generate_reply_another(tokenizer,inp,model):
         .replace("[SEP]", "")
     )
 
-    print('output', output)
+    # print('output', output)
     tex = ["。", "?", "？", "！", "!", "."]
     for t in tex:
         if t in sent:
@@ -89,7 +89,8 @@ def main(args):
     print('変更前')
     # generate_reply(tokenizer,msg,model, device)
     print('変更後')
-    generate_reply_another(tokenizer,msg,model)
+    output = generate_reply_another(tokenizer,msg,model)
+    print(output)
     
 
 
