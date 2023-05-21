@@ -9,7 +9,14 @@ def generate_reply(tokenizer,inp,model, device, num_gen=1):
     input_text = "<s>" + str(inp) + "[SEP]"
     input_ids = tokenizer.encode(input_text, return_tensors='pt').to(device)
     # 変数の修正が必要?
-    out = model.generate(input_ids, do_sample=True, max_length=128, num_return_sequences=1, top_p=0.95, top_k=50, bad_words_ids=[[1], [5]], no_repeat_ngram_size=3)
+    out = model.generate(input_ids, 
+                         do_sample=True, 
+                         max_length=30, 
+                         num_return_sequences=1, 
+                         top_p=0.95, 
+                         top_k=50, 
+                         bad_words_ids=[[1], [5]], 
+                         no_repeat_ngram_size=3)
 
     print(">", "あなた")
     print(inp)
@@ -33,6 +40,7 @@ def generate_reply_another(tokenizer,inp,model):
         output_ids = model.generate(
             input_ids.to(model.device),
             do_sample=True,
+            max_length=30, 
             top_p=0.95,
             top_k=100,
             num_return_sequences=1,
@@ -52,6 +60,7 @@ def generate_reply_another(tokenizer,inp,model):
         .replace("[SEP]", "")
     )
 
+    print('output', output)
     tex = ["。", "?", "？", "！", "!", "."]
     for t in tex:
         if t in sent:
@@ -78,7 +87,7 @@ def main(args):
     msg = args.input_text
     
     print('変更前')
-    generate_reply(tokenizer,msg,model, device)
+    # generate_reply(tokenizer,msg,model, device)
     print('変更後')
     generate_reply_another(tokenizer,msg,model)
     
