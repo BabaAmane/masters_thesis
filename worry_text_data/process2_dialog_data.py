@@ -18,13 +18,11 @@ def remove_symbol(text: str)-> str:
                        '＝', '※', '㈱', '､', '△', '℮', 'ⅼ', '‐', '┝', '↳', '◉', '／', '＋', '○',
                         '✅', '☑', '➤', 'ﾞ', '↳', '〶', '☛', '⁺', '『', '≫', 'ゝ', 'ゝ' ,'゛', '：', '〒', '∥', '￣', '゜', '＼', '‥', '℃','〃', '〆',
                        '+', '※', '：', '＠', '＊', '──', '．', '？', '(', ')', '（' ,'）', '[', ']', '{', '}', '【', '】', '〔', '〕', '〈', '〉', '『', '』', '《', '》',
-                       '<', '>', '❤️', '〜', '♪', 'θ', 'ノ', '´', '｀', '￣','…', '％', '%', '-', '_', 'ﾟ▽ﾟ'
-                       
-                       ] 
+                       '<', '>', '❤️', '〜', '♪', 'θ', 'ノ', '´', '｀', '￣','…', '％', '%', '-', '_', 'ﾟ▽ﾟ', '」', '」', '☌ᴗ☌', '･･', '･ω･', '｡｡❁･ﾟﾟ', '⊃ω⊂', '＞＜', 'ω･'
+                       ]  
 
     for punct in puncts:
         text = text.replace(punct, '')
-        
     return text
 
 def chenge_pronunciation(text: str) -> str:
@@ -36,6 +34,14 @@ def remove_number(text: str) -> str:
     puncts = r'[0-9]'
     text = re.sub(puncts, '', text)
     return text
+
+def add_punctuation(text: str) -> str:
+    if text[-1] == '。':
+        return text
+    else:
+        text = text + '。'
+        return text
+
 
 
 def main():
@@ -56,11 +62,13 @@ def main():
     original_df = original_df[original_df['message'] != '']
     original_df = original_df[original_df['message'] != ' ']
 
-
     print('len 記号削除＋null削除', len(original_df))
-    
-    print(original_df.isnull().sum())
 
+    # 文末に。をつける
+    original_df['message'] = original_df['message'].map(add_punctuation)
+
+
+    print(original_df.isnull().sum())
     original_df.to_csv('after_ processing_data/dialog_data_after_process2.csv')
 
 if __name__=='__main__':
