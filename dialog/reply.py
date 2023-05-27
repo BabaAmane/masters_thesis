@@ -87,7 +87,7 @@ def main(args):
     msg = args.input_text
     
     print('変更前')
-    # generate_reply(tokenizer,msg,model, device)
+    generate_reply(tokenizer,msg,model, device)
     print('変更後')
     output = generate_reply_another(tokenizer,msg,model)
     print(output)
