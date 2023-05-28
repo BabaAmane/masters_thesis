@@ -72,7 +72,6 @@ def generate_reply_another(tokenizer,inp,model):
 
 
 def main(args):
-
     pretrain_model = args.pretrain_model
     fainching_model = args.fainching_model
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -86,11 +85,11 @@ def main(args):
 
     msg = args.input_text
     
-    print('変更前')
+    # print('変更前')
     generate_reply(tokenizer,msg,model, device)
-    print('変更後')
-    output = generate_reply_another(tokenizer,msg,model)
-    print(output)
+    # print('変更後')
+    # output = generate_reply_another(tokenizer,msg,model)
+    # print(output)
     
 
 
