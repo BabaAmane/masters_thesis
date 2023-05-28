@@ -84,6 +84,7 @@ def main(args):
     model.eval()
 
     msg = args.input_text
+    text_list = ['後悔ばかりです。', '彼氏ができません。', '会いたいなぁと思いますがなかなかうまくいきません。', '会えなくなったり連絡なくなりそうでこわいです。']
     
     # print('変更前')
     generate_reply(tokenizer,msg,model, device)
