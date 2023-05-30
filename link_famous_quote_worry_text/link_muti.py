@@ -80,7 +80,7 @@ def main(args):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--worry_text_data_dir', type=str, default='../worry_text_data/analysis/process_score_result/negative_transformer_more9.csv',
+    parser.add_argument('--worry_text_data_dir', type=str, default='../worry_text_data/analysis/by_length/edit_after/process_after/negative_transformer_more9_concat.csv',
                         help='悩みの文章')
     parser.add_argument('--famous_quote_data_dir', type=str, default='../famous_quote_data/final_famous_quote_data/famous_quote_data_append_conditions2.csv',
                         help='名言')
