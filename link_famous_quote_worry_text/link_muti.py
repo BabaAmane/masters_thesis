@@ -29,7 +29,7 @@ def main(args):
     df_worry_text_data = df_worry_text_data.dropna(how='any')
 
     # 名言のデータの読み込み
-    famous_quote_data_dir = '../famous_quote_data/final_famous_quote_data/famous_quote_data_append_conditions2.csv'
+    famous_quote_data_dir = args.famous_quote_data_dir
     df_famous_quote_data = pd.read_csv(famous_quote_data_dir)
     df_famous_quote_data = df_famous_quote_data.dropna(how='any')
 
@@ -82,8 +82,10 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--worry_text_data_dir', type=str, default='../worry_text_data/analysis/process_score_result/negative_transformer_more9.csv',
                         help='悩みの文章')
+    parser.add_argument('--famous_quote_data_dir', type=str, default='../famous_quote_data/final_famous_quote_data/famous_quote_data_append_conditions2.csv',
+                        help='名言')
     parser.add_argument('--result_dir', type=str, default='result/linked_negative_text_famous_quote.csv',
-                        help='悩みの文章')
+                        help='紐付け結果')
 
     args = parser.parse_args()
     main(args) 
