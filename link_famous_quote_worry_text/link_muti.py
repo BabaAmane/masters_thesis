@@ -54,7 +54,7 @@ def main(args):
 
     print('1')
 
-    worry_text_list2 = worry_text_list[100000:200000]
+    worry_text_list2 = worry_text_list[100000:]
     encoded_worry_text_list2 = encode_sentences(model, worry_text_list2)
     most_similar_sentences2 = calculate_most_similar_sentences(encoded_worry_text_list2, encoded_famous_quote_list, famous_quote_list)
     gc.collect()
@@ -62,15 +62,15 @@ def main(args):
     gc.collect()
     print(2)
 
-    worry_text_list3 = worry_text_list[200000:]
-    encoded_worry_text_list3 = encode_sentences(model, worry_text_list3)
-    most_similar_sentences3 = calculate_most_similar_sentences(encoded_worry_text_list3, encoded_famous_quote_list, famous_quote_list)
-    gc.collect()
-    del worry_text_list3
-    gc.collect()
-    print(3)
+    # worry_text_list3 = worry_text_list[200000:]
+    # encoded_worry_text_list3 = encode_sentences(model, worry_text_list3)
+    # most_similar_sentences3 = calculate_most_similar_sentences(encoded_worry_text_list3, encoded_famous_quote_list, famous_quote_list)
+    # gc.collect()
+    # del worry_text_list3
+    # gc.collect()
+    # print(3)
 
-    most_similar_sentences = most_similar_sentences1 + most_similar_sentences2 + most_similar_sentences3
+    most_similar_sentences = most_similar_sentences1 + most_similar_sentences2 
 
 
     # データフレーム化
