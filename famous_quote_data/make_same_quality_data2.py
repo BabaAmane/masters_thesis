@@ -14,10 +14,10 @@ def main():
     train_texts = list(df_data1['famous_quote'])
     test_texts = list(df_data2['famous_quote'])
 
-    # train_texts = train_texts[:10]
+    # train_texts = train_texts[:100]
     # test_texts = test_texts[:5]
 
-    model_name = 'bert-base-uncased'
+    model_name = 'cl-tohoku/bert-base-japanese-whole-word-masking'
     tokenizer = BertTokenizer.from_pretrained(model_name)
     model = BertModel.from_pretrained(model_name)
 
@@ -38,25 +38,31 @@ def main():
             test_features.append(pooled_output)
 
     features = np.array(features)
-    features = features.reshape(len(train_texts), -1)
+    train_features_mean = np.mean(features, axis=0).reshape(1, -1)
     test_features = np.array(test_features)
 
-    max_similarity_list = []
-    hit_quotes_list = []
+  
+    similarities_list = []
     for i, test_feature in tqdm(enumerate(test_features)):
         test_feature = test_feature.reshape(1, -1)
-        similarities = cosine_similarity(features, test_feature)
-        max_similarity = max(similarities)
-        max_index = similarities.argmax()
-        # print(f"テキスト: {test_texts[i]}")
-        # print(f"類似度: {max_similarity}")
-        # print(f"評価: {train_texts[max_index]}")
-        max_similarity_list.append(max_similarity[0])
-        hit_quotes_list.append(train_texts[max_index])
+        similarities = cosine_similarity(test_feature, train_features_mean)
 
-    df_result = pd.DataFrame(list(zip(test_texts, hit_quotes_list, max_similarity_list)), columns = ['famous_quote', 'hit_famous_quote', 'max_similarity'])
-    df_result.to_csv('data2_quality_same_data1/data2_quality_same_data1.csv', index=False)
+        similarities_list.append(similarities)
 
+    similarities_array = np.concatenate(similarities_list, axis=0)
+
+    similarities_list = []
+
+    for i, similarities in enumerate(similarities_array):
+        similarities_list.append(similarities[0])
+
+    # データフレーム保存
+    df_result = pd.DataFrame(list(zip(test_texts, similarities_list)), columns = ['famous_quote', 'similarity'])
+    df_result.to_csv('data2_quality_same_data1/data2_quality_same_data1_mean.csv', index=False)
+                
+
+
+        
 
 if __name__=='__main__':
     main()
