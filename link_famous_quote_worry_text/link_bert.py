@@ -56,7 +56,7 @@ def main(args):
 
 
     # リスト1の各テキストに対して最も類似度が高い文章をリスト2から抽出
-    most_similar_texts = [calculate_similarity(worry_text_list, famous_quote_list) for worry_text in worry_text_list]
+    most_similar_texts = [calculate_similarity(worry_text, famous_quote_list) for worry_text in worry_text_list]
 
     df_link = pd.DataFrame(list(zip(worry_text_list, most_similar_texts)), columns = ['worry_text', 'famous_quote'])
     result_dir = args.result_dir
@@ -74,3 +74,5 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
     main(args) 
+
+    
