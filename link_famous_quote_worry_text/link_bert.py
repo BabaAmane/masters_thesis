@@ -5,7 +5,7 @@ import argparse
 from transformers import BertTokenizer, BertModel
 from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
-
+import time
 
 def calculate_similarity(text1, text2_list):
     # BERTモデルとトークナイザーの読み込み
@@ -57,12 +57,17 @@ def main(args):
     print('worry text length', len(worry_text_list))
     print('famous text length', len(famous_quote_list))
 
-    worry_text_list = worry_text_list[:5]
+    worry_text_list = worry_text_list[0]
 
 
     # リスト1の各テキストに対して最も類似度が高い文章をリスト2から抽出
+    start_time = time.time()
     most_similar_texts = [calculate_similarity(worry_text, famous_quote_list) for worry_text in worry_text_list]
 
+    end_time = time.time()
+    execution_time = end_time - start_time
+
+    print("実行時間:", execution_time, "秒")
 
     df_link = pd.DataFrame(list(zip(worry_text_list, most_similar_texts)), columns = ['worry_text', 'famous_quote'])
     result_dir = args.result_dir
