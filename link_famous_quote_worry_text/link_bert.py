@@ -24,8 +24,11 @@ def calculate_similarity(text1, text2_list):
     input_ids2_list = [tokenizer.encode(text2, add_special_tokens=True, truncation=True, padding='max_length', max_length=512) for text2 in text2_list]
     input_ids2_list = torch.tensor(input_ids2_list)
     with torch.no_grad():
-        outputs2 = model(input_ids2_list)
-        pooled_output2 = outputs2[1].numpy()
+        pooled_output2 = []
+        for input_ids2 in input_ids2_list:
+            outputs2 = model(input_ids2.unsqueeze(0))
+            pooled_output2.append(outputs2[1].numpy())
+        pooled_output2 = np.concatenate(pooled_output2, axis=0)
 
     # コサイン類似度を計算
     similarities = cosine_similarity(pooled_output1.reshape(1, -1), pooled_output2)
