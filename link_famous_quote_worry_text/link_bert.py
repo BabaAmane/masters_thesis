@@ -14,15 +14,17 @@ def calculate_similarity(text1, text2_list):
     model = BertModel.from_pretrained(model_name)
 
     # テキスト1の特徴量を計算
-    input_ids1 = tokenizer.encode(text1, add_special_tokens=True, max_length=512)  # 最大シーケンス長を制限
+    input_ids1 = tokenizer.encode(text1, add_special_tokens=True, truncation=True, padding='max_length', max_length=512)
+    input_ids1 = torch.tensor([input_ids1])
     with torch.no_grad():
-        outputs1 = model(torch.tensor([input_ids1]))
+        outputs1 = model(input_ids1)
         pooled_output1 = outputs1[1].numpy()
 
     # テキスト2の特徴量を計算
-    input_ids2_list = [tokenizer.encode(text2, add_special_tokens=True, max_length=512) for text2 in text2_list]  # 最大シーケンス長を制限
+    input_ids2_list = [tokenizer.encode(text2, add_special_tokens=True, truncation=True, padding='max_length', max_length=512) for text2 in text2_list]
+    input_ids2_list = torch.tensor(input_ids2_list)
     with torch.no_grad():
-        outputs2 = model(torch.tensor(input_ids2_list))
+        outputs2 = model(input_ids2_list)
         pooled_output2 = outputs2[1].numpy()
 
     # コサイン類似度を計算
