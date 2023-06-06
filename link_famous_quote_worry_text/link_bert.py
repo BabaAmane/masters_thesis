@@ -14,13 +14,13 @@ def calculate_similarity(text1, text2_list):
     model = BertModel.from_pretrained(model_name)
 
     # テキスト1の特徴量を計算
-    input_ids1 = tokenizer.encode(text1, add_special_tokens=True)
+    input_ids1 = tokenizer.encode(text1, add_special_tokens=True, max_length=512)  # 最大シーケンス長を制限
     with torch.no_grad():
         outputs1 = model(torch.tensor([input_ids1]))
         pooled_output1 = outputs1[1].numpy()
 
     # テキスト2の特徴量を計算
-    input_ids2_list = [tokenizer.encode(text2, add_special_tokens=True) for text2 in text2_list]
+    input_ids2_list = [tokenizer.encode(text2, add_special_tokens=True, max_length=512) for text2 in text2_list]  # 最大シーケンス長を制限
     with torch.no_grad():
         outputs2 = model(torch.tensor(input_ids2_list))
         pooled_output2 = outputs2[1].numpy()
@@ -57,6 +57,7 @@ def main(args):
 
     # リスト1の各テキストに対して最も類似度が高い文章をリスト2から抽出
     most_similar_texts = [calculate_similarity(worry_text, famous_quote_list) for worry_text in worry_text_list]
+
 
     df_link = pd.DataFrame(list(zip(worry_text_list, most_similar_texts)), columns = ['worry_text', 'famous_quote'])
     result_dir = args.result_dir
