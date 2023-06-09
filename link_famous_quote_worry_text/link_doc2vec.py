@@ -47,7 +47,7 @@ def main(args):
     model = Doc2Vec(tagged_data, vector_size=100, min_count=1, epochs=10)
 
     # リスト1の各テキストに対して最も類似度が高い文章をリスト2から抽出
-    most_similar_texts = [calculate_similarity(text1, famous_quote_list, model) for text1 in worry_text_list]
+    most_similar_texts = [calculate_similarity(text1, famous_quote_list, model) for text1 in tqdm(worry_text_list)]
 
     # print(most_similar_texts)
 
