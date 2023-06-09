@@ -58,7 +58,7 @@ def main(args):
     documents = worry_text_list + famous_quote_list
 
     # TaggedDocumentの作成
-    tagged_documents = [TaggedDocument(words=doc.split(), tags=[i]) for i, doc in enumerate(documents)]
+    tagged_documents = [TaggedDocument(words=doc.split(), tags=[i]) for i, doc in tqdm(enumerate(documents))]
 
     # Doc2Vecモデルの学習
     model = Doc2Vec(tagged_documents, vector_size=100, window=5, min_count=1, workers=4)
