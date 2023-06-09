@@ -40,21 +40,53 @@ def main(args):
     # worry_text_list = worry_text_list[:10]
     # famous_quote_list = famous_quote_list[:1000]
 
-    # TaggedDocumentの作成
-    tagged_data = [TaggedDocument(words=simple_preprocess(text), tags=[str(i)]) for i, text in tqdm(enumerate(famous_quote_list))]
+    # # TaggedDocumentの作成
+    # tagged_data = [TaggedDocument(words=simple_preprocess(text), tags=[str(i)]) for i, text in tqdm(enumerate(famous_quote_list))]
 
-    # Doc2Vecモデルの学習
-    model = Doc2Vec(tagged_data, vector_size=100, min_count=1, epochs=10)
+    # # Doc2Vecモデルの学習
+    # model = Doc2Vec(tagged_data, vector_size=100, min_count=1, epochs=10)
 
-    # リスト1の各テキストに対して最も類似度が高い文章をリスト2から抽出
-    most_similar_texts = [calculate_similarity(text1, famous_quote_list, model) for text1 in tqdm(worry_text_list)]
+    # # リスト1の各テキストに対して最も類似度が高い文章をリスト2から抽出
+    # most_similar_texts = [calculate_similarity(text1, famous_quote_list, model) for text1 in tqdm(worry_text_list)]
 
     # print(most_similar_texts)
 
-    # データフレーム化
-    df_link = pd.DataFrame(list(zip(worry_text_list, most_similar_texts)), columns = ['worry_text', 'famous_quote'])
+    # # データフレーム化
+    
+
+    # 文章リストの結合
+    documents = worry_text_list + famous_quote_list
+
+    # TaggedDocumentの作成
+    tagged_documents = [TaggedDocument(words=doc.split(), tags=[i]) for i, doc in enumerate(documents)]
+
+    # Doc2Vecモデルの学習
+    model = Doc2Vec(tagged_documents, vector_size=100, window=5, min_count=1, workers=4)
+
+    # 文章リスト2のベクトル表現を取得
+    vectors_list2 = np.array([model.infer_vector(doc.split()) for doc in tqdm(famous_quote_list)])
+
+    # 文章リスト1のベクトル表現を取得
+    vectors_list1 = np.array([model.infer_vector(doc.split()) for doc in tqdm(worry_text_list)])
+
+    # コサイン類似度行列の計算
+    similarity_matrix = np.dot(vectors_list1, vectors_list2.T)
+
+    # 最も類似度が高い文章のインデックスを取得
+    most_similar_index = np.argmax(similarity_matrix, axis=1)
+
+    # 最も類似度が高い文章を抽出
+    most_similar_sentences = [famous_quote_list[index] for index in tqdm(most_similar_index)]
+
+    # 結果の表示
+    # print(most_similar_sentences)
+
+    df_link = pd.DataFrame(list(zip(worry_text_list, most_similar_sentences)), columns = ['worry_text', 'famous_quote'])
     result_dir = args.result_dir
     df_link.to_csv(result_dir, index=False)
+
+
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
