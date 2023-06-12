@@ -46,14 +46,25 @@ def main(args):
     
     # txt = "".join(tmp) 
     # output_file.write(txt+ '\n')
+
+    tmp2 = []
+    output_file_dir2 = args.output_file2
+    output_file2 = open(output_file_dir2, 'w', encoding='utf-8')
+    for i in tqdm(range(len(input_text_list))):
+        data = "<s>" + str(input_text_list[i]) + "[SEP]" + str(output_text_list[i]) + "</s>[SEP]</s>" +'\n'
+        tmp2.append(data)
+        output_file2.write(data)
+    
        
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--pretrain_model', type=str, default='rinna/japanese-gpt2-small',
                         help='pretrain model name')
-    parser.add_argument('--input_link_file', type=str, default='../../link_famous_quote_worry_text/result/linked_negative_text_famous_quote.csv',
+    parser.add_argument('--input_link_file', type=str, default='../../link_famous_quote_worry_text/result/linked_negative_text_famous_quote_doc2_vec.csv',
                         help='名言と励まし文のデータ')
     parser.add_argument('--output_file', type=str, default='train_data_worry_text_famous_quote/dataset_negative_text_famous_quote2.txt',
+                        help='出力のディレクトリ')
+    parser.add_argument('--output_file2', type=str, default='train_data_worry_text_famous_quote/dataset_negative_text_famous_quote2.txt',
                         help='出力のディレクトリ')
     
     args = parser.parse_args()
