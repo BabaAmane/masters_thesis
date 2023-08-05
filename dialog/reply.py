@@ -24,14 +24,14 @@ def generate_reply(tokenizer,inp,model, device, num_gen=1):
     # print(inp)
     # print(">", "対話システム")
     
-    encouragement_text = []
+    encouragement_text = ''
 
     for sent in tokenizer.batch_decode(out):
         sent = sent.split('[SEP]</s>')[1]
         sent = sent.replace('</s>', '')
         sent = sent.replace('<br>', '\n')
         # print(sent)
-        encouragement_text.append(sent)
+        encouragement_text += sent
     
     return encouragement_text
 
