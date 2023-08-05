@@ -48,7 +48,7 @@ def main(args):
     tokenizer = T5Tokenizer.from_pretrained(pretrain_model)
     tokenizer.do_lower_case = True
 
-    print('fainching modelの読み込み')
+    print('fainching modelの読み込み ここから30min')
     model = AutoModelForCausalLM.from_pretrained(fainching_model)
     model.to(device)
     model.eval()
@@ -70,13 +70,16 @@ def main(args):
     for item in lines:
         text_up_to_sep = item.split('[SEP]')[0]
         input_text_list.append(text_up_to_sep)
-
+        
+    input_text_list = input_text_list[:2]
     # 可視化
     encouragement_text_list = []
     for text in tqdm(input_text_list):
         encouragement_text = generate_reply(tokenizer,text,model, device)
         encouragement_text_list.append(encouragement_text)
-    
+
+    print('encouragement_text_list')
+    print(encouragement_text_list)
     # <s>, </s>の削除
     input_text_list = remove_character_from_list(input_text_list, '<s>')
     input_text_list = remove_character_from_list(input_text_list, '</s>')
