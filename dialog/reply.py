@@ -5,6 +5,7 @@ from transformers import AutoModelForCausalLM, AutoTokenizer
 import argparse
 import pandas as pd
 from tqdm import tqdm
+import time
 
 def generate_reply(tokenizer,inp,model, device, num_gen=1):
     input_text = "<s>" + str(inp) + "[SEP]"
@@ -47,9 +48,12 @@ def main(args):
     tokenizer = T5Tokenizer.from_pretrained(pretrain_model)
     tokenizer.do_lower_case = True
 
+    print('fainching modelの読み込み')
     model = AutoModelForCausalLM.from_pretrained(fainching_model)
     model.to(device)
     model.eval()
+    print('fainching modelの読み込み 完了')
+
 
     msg = args.input_text
     # input_text_list = ['<s>後悔ばかりです。</s>', '<s>彼氏ができません。</s>', '<s>自分の恋愛運を信じれません。</s>', '<s>元カレに裏切られたのでこわいです。</s>', '<s>このまま諦めるのは嫌です。</s>', '<s>切なくて胸が避けそうです。</s>', '<s>ショックのあまり立ち直れないです。</s>', '<s>孤独になるのが怖い。</s>', '<s>就活の終わりが見えていない。</s>', '<s>意気消沈気味です。</s>', '<s>諦めた方がいいですか。</s>']
