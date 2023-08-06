@@ -93,6 +93,7 @@ def make_input_output_list(file_name: str, rate: str, random_state: str)-> list:
     
     return input_list, output_list
 
+
 def make_dataset(input_list: list, output_list: list)-> list:
     data = []
     for input_text, output_text in zip(input_list, output_list):
@@ -115,6 +116,10 @@ def main(args):
     # 辞書の作成
     train_data = make_dataset(train_input_list, train_output_list)
     val_data = make_dataset(val_input_list, val_output_list)
+
+    train_data = train_data.shuffle().map(lambda x: tokenize(generate_prompt(x), tokenizer))
+    val_data = val_data.shuffle().map(lambda x: tokenize(generate_prompt(x), tokenizer))
+
 
     # 学習
     # モデルの準備
