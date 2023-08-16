@@ -20,8 +20,8 @@ def main(args):
     print(input_text_list[0])
 
     # 全てテキストファイルの作成
-    pretrain_model = args.pretrain_model
-    tokenizer = T5Tokenizer.from_pretrained(pretrain_model)
+    # pretrain_model = args.pretrain_model
+    # tokenizer = T5Tokenizer.from_pretrained(pretrain_model)
 
     tmp = []
     output_file_dir = args.output_file
@@ -50,9 +50,9 @@ def main(args):
        
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--pretrain_model', type=str, default='rinna/japanese-gpt2-small',
+    parser.add_argument('--pretrain_model', type=str, default='rinna/japanese-gpt2-medium',
                         help='pretrain model name')
-    parser.add_argument('--input_link_file', type=str, default='../../link_famous_quote_worry_text/result/linked_negative_text_famous_quote_doc2_vec.csv',
+    parser.add_argument('--input_link_file', type=str, default='../../link_famous_quote_worry_text/result/linked_negative_text_famous_quote_doc2vec.csv',
                         help='名言と励まし文のデータ')
     parser.add_argument('--output_file', type=str, default='train_data_worry_text_famous_quote/dataset_negative_text_famous_quote2.txt',
                         help='出力のディレクトリ')
