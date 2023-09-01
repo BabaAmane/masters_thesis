@@ -60,9 +60,9 @@ def main(args):
     # 評価データの読み込み
     rate = args.rate
     random_state = args.random_state
-    val_dir = 'train_val/doc2vec/val_' + str(rate) + '_' + str(random_state) + '.txt'
+    test_dir = 'train_val/doc2vec/val_' + str(rate) + '_' + str(random_state) + '.txt'
     lines = []
-    with open(val_dir, 'r', encoding='utf-8') as file:
+    with open(test_dir, 'r', encoding='utf-8') as file:
         for line in file:
             lines.append(line.strip())
     input_text_list = []
@@ -99,9 +99,9 @@ if __name__ == '__main__':
                         help='random_state')
     parser.add_argument('--pretrain_model', type=str, default='rinna/japanese-gpt2-medium',
                         help='pretrain model name')
-    parser.add_argument('--fainching_model', type=str, default='model_0epoch/',
+    parser.add_argument('--fainching_model', type=str, default='model/split_data_model/0824/medium_82_42_100epoch/checkpoint-12232',
                         help='fainching model name')
-    parser.add_argument('--result_dir', type=str, default='reply_result/result_82_42_40epoch.csv',
+    parser.add_argument('--result_dir', type=str, default='reply_result/0824/result_82_42_11epoch.csv',
                         help='result_dir')
     
     
