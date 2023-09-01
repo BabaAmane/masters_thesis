@@ -60,7 +60,7 @@ def main(args):
     # 評価データの読み込み
     rate = args.rate
     random_state = args.random_state
-    test_dir = 'train_val/doc2vec/val_' + str(rate) + '_' + str(random_state) + '.txt'
+    test_dir = 'train_val/doc2vec/0824/test_' + str(rate) + '_' + str(random_state) + '.txt'
     lines = []
     with open(test_dir, 'r', encoding='utf-8') as file:
         for line in file:
@@ -87,8 +87,6 @@ def main(args):
     df_result = pd.DataFrame(list(zip(input_text_list, encouragement_text_list)), columns = ['input_text', 'encouragement_text'])
     result_dir = args.result_dir
     df_result.to_csv(result_dir, index=False)
-    
-    
 
 
 if __name__ == '__main__':
