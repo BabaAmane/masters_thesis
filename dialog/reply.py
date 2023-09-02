@@ -7,13 +7,13 @@ import pandas as pd
 from tqdm import tqdm
 import time
 
-def generate_reply(tokenizer,inp,model, device, num_gen=1):
+def generate_reply(tokenizer,inp,model, device, max_len):
     input_text = "<s>" + str(inp) + "[SEP]"
     input_ids = tokenizer.encode(input_text, return_tensors='pt').to(device)
     # 変数の修正が必要?
     out = model.generate(input_ids, 
                          do_sample=True, 
-                         max_length=40, 
+                         max_length=max_len, 
                          num_return_sequences=1, 
                          top_p=0.95, 
                          top_k=50, 
@@ -74,7 +74,8 @@ def main(args):
     # 可視化
     encouragement_text_list = []
     for text in tqdm(input_text_list):
-        encouragement_text = generate_reply(tokenizer,text,model, device)
+        # max len を40,60にする
+        encouragement_text = generate_reply(tokenizer,text,model, device, 60)
         encouragement_text_list.append(encouragement_text)
 
     # <s>, </s>の削除
