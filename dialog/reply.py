@@ -11,6 +11,7 @@ def generate_reply(tokenizer,inp,model, device, max_len):
     input_text = "<s>" + str(inp) + "[SEP]"
     input_ids = tokenizer.encode(input_text, return_tensors='pt').to(device)
     # 変数の修正が必要?
+    max_len = int(max_len)
     out = model.generate(input_ids, 
                          do_sample=True, 
                          max_length=max_len, 
