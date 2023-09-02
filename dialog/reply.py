@@ -72,10 +72,11 @@ def main(args):
         input_text_list.append(text_up_to_sep)
         
     # 可視化
+    max_len = args.max_len
     encouragement_text_list = []
     for text in tqdm(input_text_list):
         # max len を40,60にする
-        encouragement_text = generate_reply(tokenizer,text,model, device, 60)
+        encouragement_text = generate_reply(tokenizer,text,model, device, max_len)
         encouragement_text_list.append(encouragement_text)
 
     # <s>, </s>の削除
@@ -96,6 +97,8 @@ if __name__ == '__main__':
                         help='rate')
     parser.add_argument('--random_state', type=str, default='42',
                         help='random_state')
+    parser.add_argument('--max_len', type=str, default='40',
+                        help='max len')
     parser.add_argument('--pretrain_model', type=str, default='rinna/japanese-gpt2-medium',
                         help='pretrain model name')
     parser.add_argument('--fainching_model', type=str, default='model/split_data_model/0824/medium_82_42_100epoch/checkpoint-12232',
