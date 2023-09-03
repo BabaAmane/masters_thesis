@@ -98,7 +98,7 @@ if __name__ == '__main__':
                         help='rate')
     parser.add_argument('--random_state', type=str, default='42',
                         help='random_state')
-    parser.add_argument('--max_len', type=str, default='40',
+    parser.add_argument('--max_len', type=str, default='60',
                         help='max len')
     parser.add_argument('--pretrain_model', type=str, default='rinna/japanese-gpt2-medium',
                         help='pretrain model name')
